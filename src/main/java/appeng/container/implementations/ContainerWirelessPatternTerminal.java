@@ -26,11 +26,7 @@ import appeng.api.implementations.IUpgradeableCellContainer;
 import appeng.api.networking.crafting.ICraftingPatternDetails;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.container.interfaces.IInventorySlotAware;
-import appeng.container.slot.OptionalSlotFake;
-import appeng.container.slot.SlotFakeCraftingMatrix;
-import appeng.container.slot.SlotPatternOutputs;
-import appeng.container.slot.SlotPatternTerm;
-import appeng.container.slot.SlotRestrictedInput;
+import appeng.container.slot.*;
 import appeng.core.AEConfig;
 import appeng.core.localization.PlayerMessages;
 import appeng.helpers.WirelessTerminalGuiObject;
@@ -232,7 +228,7 @@ public class ContainerWirelessPatternTerminal extends ContainerPatternEncoder im
     public void saveChanges() {
         if (Platform.isServer()) {
             NBTTagCompound tag = new NBTTagCompound();
-            ((AppEngInternalInventory) crafting).writeToNBT(tag, "craftingGrid");
+            ((AppEngInternalInventory) crafting).writeToNBT(tag, "craftingGridPattern");
 
             this.output.writeToNBT(tag, "output");
             this.pattern.writeToNBT(tag, "patterns");
@@ -245,7 +241,7 @@ public class ContainerWirelessPatternTerminal extends ContainerPatternEncoder im
     private void loadFromNBT() {
         NBTTagCompound data = wirelessTerminalGUIObject.getItemStack().getTagCompound();
         if (data != null) {
-            ((AppEngInternalInventory) crafting).readFromNBT(data, "craftingGrid");
+            ((AppEngInternalInventory) crafting).readFromNBT(data, "craftingGridPattern");
             this.output.readFromNBT(data, "output");
             this.pattern.readFromNBT(data, "patterns");
             upgrades.readFromNBT(wirelessTerminalGUIObject.getItemStack().getTagCompound().getCompoundTag("upgrades"));
